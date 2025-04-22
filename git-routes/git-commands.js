@@ -24,7 +24,7 @@ function getGitInstance(){
 
 async function initializeRepo(){
     try{
-        // await git.init();
+        
     }
     catch(error){
         console.log(`git-command-error: ${error}`);
