@@ -27,6 +27,11 @@ To install this and launch locally follow these steps:
     cd git-backend
     ```
 
+- Make a blank folder(works as the repo)
+    ```bash
+    mkdir base-dir
+    ```
+
 - Install the dependencies
     ```bash
     npm install
