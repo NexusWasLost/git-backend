@@ -1,107 +1,81 @@
 const express = require("express");
 const router = express.Router();
-
-const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
 
-const {  
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, path.join(__dirname, "base-dir"));
+    },
+
+    filename: function(req, file, cb){
+        cb(null, file.originalname);
+    }
+})
+const upload = multer({ storage: storage });
+
+const { 
+
     initializeRepo,
     add,
     commit,
     status,
-    log,
-    push,
-    setGitDir
-} = require("./git-commands.js");
+    log
 
-const baseDir = path.join(process.cwd(), "base-dir");
+} = require("./git-commands.js");
 
 router.post("/init-repo", async (req, res) => {
     try {
-        const parentFolder = path.join(baseDir, `repo${Date.now()}`);
-        
-        setGitDir(parentFolder); //set parent folder as base directory for .git folder
-
-        const srcFolder = path.join(parentFolder, "src");
-        const publicFolder = path.join(parentFolder, "public");
-
-        fs.mkdir(parentFolder, { recursive: true }, (error) =>{
-            if(error){
-                console.log(error);
-                return res.status(500).json({ message: "Some error occured !" })
-            }
-
-            //make the sub folders
-            fs.mkdir(srcFolder, { recursive: true }, (error) =>{
-                if(error){
-                    console.log(error);
-                    return res.status(500).json({ message: "Some error occured !" })
-                }
-            });
-    
-            fs.mkdir(publicFolder, { recursive: true }, (error) =>{
-                if(error){
-                    console.log(error);
-                    return res.status(500).json({ message: "Some error occured !" })
-                }
-            });
-        })
-
+        initializeRepo();
         res.status(200).json({ message: "Successfully Intialized repository" });
     }
     catch (error) {
         console.log(`error: ${error}`);
-        res.status(500).json({ message: "Some error occured !" });
+        res.status(500).json({ message: "Some error occured ! Try Again !" });
     }
 })
 
 router.post("/git-add", async (req, res) => {
     try {
+        add(upload.array("code-files", 10));
         res.status(200).json({ message: "Successfully Added files to the staging area !" });
     }
     catch (error) {
         console.log(`error: ${error}`);
-        res.status(500).json({ message: "Some error occured !" });
+        res.status(500).json({ message: "Some error occured ! Try Again !" });
     }
 })
 
 router.post("/git-commit", async (req, res) => {
     try {
+        commit();
         res.status(200).json({ message: "Successfully commited !" });
     }
     catch (error) {
         console.log(`error: ${error}`);
-        res.status(500).json({ message: "Some error occured !" });
+        res.status(500).json({ message: "Some error occured ! Try Again !" });
     }
 })
 
 router.post("/git-log", async (req, res) => {
     try {
+        log();
         res.status(200).json({ message: "Git log shown" });
     }
     catch (error) {
         console.log(`error: ${error}`);
-        res.status(500).json({ message: "Some error occured !" });
+        res.status(500).json({ message: "Some error occured ! Try Again !" });
     }
 })
 
 router.post("/git-status", async (req, res) => {
     try {
+        status();
         res.status(200).json({ message: "Git Status shown" });
     }
     catch (error) {
         console.log(`error: ${error}`);
-        res.status(500).json({ message: "Some error occured !" });
-    }
-})
-
-router.post("/git-push", async (req, res) => {
-    try {
-        res.status(200).json({ message: "Successfully pushed files to the remote !" });
-    }
-    catch (error) {
-        console.log(`error: ${error}`);
-        res.status(500).json({ message: "Some error occured !" });
+        res.status(500).json({ message: "Some error occured ! Try Again !" });
     }
 })
 

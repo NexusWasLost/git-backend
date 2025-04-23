@@ -20,24 +20,26 @@
         <div class="buttons">
             <button class="init-button" onclick="callGitAPI('/init-repo')">Init Repository</button>
 
-            <button class="add-button" onclick="callGitAPI('/git-add')">git add .</button>
+            <button class="add-button" onclick="callAdd()">git add .</button>
 
             <button class="commit-button" onclick="callCommit()">git commit</button>
 
             <button class="status-button" onclick="callGitAPI('/git-status')">git status</button>
 
             <button class="log-button" onclick="callGitAPI('/git-log')">git log</button>
-            
-            <button class="push-button" onclick="callGitAPI('git-push')">git push</button>
+
+            <button class="clear-screen-button" onclick="clearScreen()">cls</button>
         </div>
 
         <div class="display-area">
-            <p class="output-display">&gt;&gt;&gt; Output will appear here...</p>
+            <p class="output-display">>>> Output will appear here...</p>
         </div>
 
         <div class="upload-files">
-            <p class="upload-file-p">Upload files for staging...</p>
-            <input type="file" class="upload-file-input">
+            <form action="/git-add" method="POST" enctype="multipart/form-data" id="upload-files-form">
+                <p class="upload-file-p">Upload files for staging...</p>
+                <input type="file" class="upload-file-input">
+            </form>
         </div>
     </div>
 

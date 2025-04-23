@@ -1,30 +1,18 @@
-const { simpleGit, CleanOptions } = require('simple-git');
-
+const { simpleGit } = require('simple-git');
 const path = require("path");
 
-let dynamicDir = null;
-function setGitDir(dirPath){
-
-    //set dynamic directory path for .git folder intialization
-    dynamicDir = dirPath;
+let options = {
+    baseDir: path.join(process.cwd(), "base-dir"),
+    binary: "git",
+    maxConcurrentProcesses: 6,
+    trimmed: false,
 }
 
-function getGitInstance(){
-    if(!dynamicDir){
-        throw new Error("Directory is null !");
-    }
-
-    return simpleGit({
-        baseDir: path.join(process.cwd(), "base-dir", dynamicDir),
-        binary: git,
-        maxConcurrentProcesses: 6,
-        trimmed: false,
-    });
-}
+const git = simpleGit(options);
 
 async function initializeRepo(){
     try{
-        
+        await git.init();
     }
     catch(error){
         console.log(`git-command-error: ${error}`);
@@ -32,9 +20,9 @@ async function initializeRepo(){
     }
 }
 
-async function add(){
+async function add(files){
     try{
-
+        await git.add(files);
     }
     catch(error){
         console.log(`git-command-error: ${error}`);
@@ -44,7 +32,7 @@ async function add(){
 
 async function commit(){
     try{
-
+        await git.commit();
     }
     catch(error){
         console.log(`git-command-error: ${error}`);
@@ -54,7 +42,8 @@ async function commit(){
 
 async function status(){
     try{
-
+        const status = await git.status();
+        console.log(status);
     }
     catch(error){
         console.log(`git-command-error: ${error}`);
@@ -64,17 +53,8 @@ async function status(){
 
 async function log(){
     try{
-
-    }
-    catch(error){
-        console.log(`git-command-error: ${error}`);
-        return "Error Occured";
-    }
-}
-
-async function push(){
-    try{
-
+        const logResposne = await git.log();
+        console.log(logResposne);
     }
     catch(error){
         console.log(`git-command-error: ${error}`);
@@ -88,8 +68,6 @@ module.exports = {
     add,
     commit,
     status,
-    log,
-    push,
-    setGitDir
-
+    log
+    
 }
