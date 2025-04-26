@@ -20,7 +20,7 @@
         <div class="buttons">
             <button class="init-button" onclick="callGitAPI('/init-repo')">Init Repository</button>
 
-            <button class="add-button" onclick="callAdd()">git add .</button>
+            <button class="add-button" onclick="callGitAPI('/git-add')">git add .</button>
 
             <button class="commit-button" onclick="callCommit()">git commit</button>
 
@@ -36,9 +36,12 @@
         </div>
 
         <div class="upload-files">
-            <form action="/git-add" method="POST" enctype="multipart/form-data" id="upload-files-form">
+            <form id="upload-files-form">
+                
                 <p class="upload-file-p">Upload files for staging...</p>
-                <input type="file" class="upload-file-input">
+                <input type="file" name="code-files" class="upload-file-input" multiple required>
+                <button type="submit" class="upload-file-button">Upload files</button>
+
             </form>
         </div>
     </div>

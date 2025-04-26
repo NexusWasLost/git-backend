@@ -1,4 +1,5 @@
 const displayArea = document.querySelector(".display-area");
+const form = document.querySelector("#upload-files-form");
 
 async function callGitAPI(route, body = {}) {
     const response = await fetch(route, {
@@ -6,7 +7,13 @@ async function callGitAPI(route, body = {}) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     });
+
     const data = await response.json();
+
+    displayArea.scrollTo({
+        top: displayArea.scrollHeight,
+        behavior: "smooth"
+    })
     showInDisplay(data.message);
 }
 
@@ -17,25 +24,33 @@ function showInDisplay(data) {
     displayArea.appendChild(message);
 }
 
-function callAdd() {
-    const input = document.querySelector(".upload-file-input");
-    const form = document.querySelector("#upload-files-form");
-
-    if (input.files.length === 0) {
-        alert("Please select a file before staging!");
-        return;
-    }
-
-    form.submit();
-}
-
 function callCommit() {
     const commitMsg = prompt("Write a commit message: ");
 
     if (commitMsg) {
-        callGitAPI("/git-commit");
+        callGitAPI("/git-commit", { commit : commitMsg });
     }
 }
+
+form.addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    try{
+        let response = await fetch("/upload-to-repo", {
+            method: "POST",
+            body: formData
+        });
+    
+        const jsonResponse = await response.json();
+        showInDisplay(jsonResponse.message);
+    }
+    catch(error){
+        console.log(error);
+        showInDisplay(error);
+    }
+})
 
 function clearScreen(){
     displayArea.innerHTML = "";

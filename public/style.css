@@ -56,7 +56,7 @@ body{
     outline: none;
 }
 
-.buttons > *:hover{
+.buttons > *:hover, .upload-file-button:hover{
     background-color: #dcdcdc;
 }
 
@@ -82,7 +82,23 @@ body{
 }
 
 .upload-file-input{
+    display: block;
+}
+
+.upload-file-input{
     cursor: pointer;
+}
+
+.upload-file-button{
+    display: block;
+    margin: 15px 0;
+    width: 275px;
+    height: 45px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    outline: none;
 }
 
 ::file-selector-button{
