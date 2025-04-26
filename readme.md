@@ -1,4 +1,4 @@
-# Git Backend Prototype (Work in progress)
+# Git Backend Prototype
 ![Static Badge](https://img.shields.io/badge/git-white?style=flat-square&logo=git)
 
 
@@ -46,7 +46,6 @@ The Server runs on PORT 3000
 
 ## 📄 Screenshots
 
-This screenshot shows a finished prototype.
 [![git-backend.png](https://i.postimg.cc/9MDNF4fY/git-backend.png)](https://postimg.cc/jwrhMSPD)
 
 ## ℹ Information
