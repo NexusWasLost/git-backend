@@ -15,13 +15,13 @@ This project features a single repo based git architecture where users can use s
 - Backend: Node.js and simple-git
 
 ## 📦 Installation
-To install this and launch locally follow these steps: 
+To install this and launch locally follow these steps:
 
 - Clone this repository
     ```bash
-    git clone https://github.com/nexus949/git-backend.git
+    git clone https://github.com/NexusWasLost/git-backend.git
     ```
-    
+
 - Navigate into the directory
     ```bash
     cd git-backend
